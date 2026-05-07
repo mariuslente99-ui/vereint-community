@@ -1,0 +1,24 @@
+{
+  "name": "Beachvolleyball Tournament",
+  "date": "2026-04-27",
+  "categories": [
+    "Sport"
+  ],
+  "description": "Sand, Sonne, gute Energie. Ganztagsformat mit gemeinsamem Grillabend danach.",
+  "price": 20,
+  "unit": "Person",
+  "totalTickets": 50,
+  "bookedTickets": 0,
+  "earlyBirdPrice": 15,
+  "earlyBirdTickets": 10,
+  "image": "titel.png",
+  "time": "15:00",
+  "locationName": "Beachanlage Phoenixsee",
+  "address": "Hörder Burgstraße 18",
+  "postalCode": "44263",
+  "city": "Dortmund",
+  "plausibleEventName": "Beachvolleyball Tournament",
+  "plausibleEventSlug": "beach-volleyball",
+  "plausibleEventPath": "/events/beach-volleyball",
+  "earlyBirdBooked": 0
+}

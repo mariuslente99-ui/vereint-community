@@ -1,0 +1,16 @@
+{
+  "people": [
+    {
+      "name": "Andrés",
+      "image": "AK.png",
+      "position": "left",
+      "arrow": "AK_pfeil.png"
+    },
+    {
+      "name": "Marius",
+      "image": "ML.png",
+      "position": "right",
+      "arrow": "ML_pfeil.png"
+    }
+  ]
+}
