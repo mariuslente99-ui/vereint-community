@@ -1,0 +1,47 @@
+Wichtig für dauerhafte Ticketbestände auf Cloudflare Pages
+
+Die Website ist statisch. Deshalb darf der Live-Bestand NICHT dauerhaft aus den event.json-Dateien kommen.
+Diese Version nutzt Cloudflare KV als dauerhafte Ticketbestands-Datenbank und die event.json nur als Start-/Fallback-Wert.
+
+Einmalig in Cloudflare einrichten:
+1. Workers & Pages → KV → Namespace erstellen, z. B. VEREINT_TICKETS
+2. Pages-Projekt → Settings → Functions → KV namespace bindings
+3. Binding name exakt: VEREINT_TICKETS
+4. Namespace auswählen und speichern
+5. Neues Deployment starten
+
+Bestandslogik:
+- Jedes Event nutzt automatisch seinen Ordnernamen/Slug als KV-Schlüssel.
+- Format des Schlüssels: event:<event-slug>
+- Beispiel Mixed Padel: event:mixed-padel-turnier-sommer-edition
+- Beispiel Beachvolleyball: event:beach-volleyball
+
+Für ein neues Event musst Du nur:
+1. Einen neuen Event-Ordner unter /events/<event-slug>/ anlegen.
+2. Die event.json mit totalTickets, earlyBirdTickets, Preisen usw. pflegen.
+3. Optional ein KV-Paar mit Startwert 0 anlegen. Falls kein KV-Paar existiert, startet die Website automatisch bei 0 verkauften Tickets.
+
+KV-Wert-Format:
+{
+  "bookedTickets": 0,
+  "earlyBirdBooked": 0,
+  "processedSessions": []
+}
+
+Wichtig:
+- bookedTickets = bereits bezahlte/verkaufte Tickets insgesamt
+- earlyBirdBooked = bereits genutzte Early-Bird-Tickets
+- processedSessions verhindert Doppelzählungen bei Stripe/Webhook-Rückläufen
+
+Warum der Bestand nach einem Push bestehen bleibt:
+- Git/Deployment enthält nur den Basiswert in event.json.
+- Der echte Live-Bestand liegt dauerhaft in Cloudflare KV.
+- Ein neues Deployment überschreibt KV nicht.
+- Solange der KV-Namespace VEREINT_TICKETS gleich bleibt und im Pages-Projekt gebunden ist, bleiben die Bestände erhalten.
+
+Beachvolleyball Testwerte in dieser Version:
+- Datum/Uhrzeit: 27.06.2026, 15:00 Uhr
+- Early Bird: 1 €
+- Normalpreis: 2 €
+- Early-Bird-Kontingent: 2 Tickets
+- KV-Schlüssel: event:beach-volleyball

@@ -1,0 +1,27 @@
+{
+  "name": "Mixed Padel Tournament - Reloaded",
+  "date": "2026-08-22",
+  "categories": [
+    "Sport",
+    "Padel"
+  ],
+  "description": "Unser Mixed Padel Tournament lädt erneut – genau wie wir. Denn wir laden Euch ein zur nächsten Ausgabe dieses mittlerweile prestigeträchtigen Events, das an mancher Stelle bereits in einem Satz mit Wimbledon fällt.\n\nDa Alexander Zverev leider verhindert ist, haben wir nur für Euch den zweitbesten Alex organisiert, der uns wie bei den letzten Malen als DJ begeistern wird.\n\nWie immer gibt es vor Ort kühle Getränke und kleine Snacks. Auch diesmal ist das Turnier für jedes Niveau geöffnet und geeignet.\n\nBitte seid etwa 30 Minuten vor Beginn vor Ort, damit wir möglichst pünktlich starten können.\n\nWir freuen uns sehr auf Eure Teilnahme. Bis dahin!",
+  "price": 60,
+  "unit": "Team",
+  "totalTickets": 24,
+  "bookedTickets": 0,
+  "earlyBirdPrice": 50,
+  "earlyBirdTickets": 5,
+  "image": "titel.png",
+  "time": "15:00",
+  "teamSize": 2,
+  "ticketLabel": "Teamticket",
+  "locationName": "padelworld Bochum",
+  "address": "Am Leithenhaus 14",
+  "postalCode": "44892",
+  "city": "Bochum",
+  "plausibleEventName": "Mixed Padel Tournament - Reloaded",
+  "plausibleEventSlug": "mixed-padel-tournament-reloaded",
+  "plausibleEventPath": "/events/mixed-padel-tournament-reloaded",
+  "earlyBirdBooked": 0
+}

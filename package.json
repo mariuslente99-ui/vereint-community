@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "start": "node local-server.mjs",
+    "dev": "node local-server.mjs",
+    "build": "node scripts/generate-events-manifest.mjs"
+  }
+}

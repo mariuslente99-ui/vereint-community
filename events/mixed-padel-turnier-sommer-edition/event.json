@@ -1,0 +1,27 @@
+{
+  "name": "Mixed Padel Tournemant - Summer Edition",
+  "date": "2026-06-13",
+  "categories": [
+    "Sport",
+    "Padel"
+  ],
+  "description": "Unser beliebtestes Format ist zurück – diesmal als Summer Edition.\n\nFreu Dich auf Padel, Sonne, Musik, kühle Getränke und eine entspannte Community-Atmosphäre. Gespielt wird als gemischtes Team: ein Mann und eine Frau treten gemeinsam an.\n\nDas Event ist für jedes Spielniveau gedacht. Je nach Teilnehmerfeld teilen wir vor Ort ggf. in Starter und Pro auf, damit jedes Team faire Spiele und den bestmöglichen Tag hat. Getränke können vor Ort erworben werden.\n\nBitte seid spätestens 30 Minuten vor Start da, damit wir entspannt ankommen und pünktlich starten können.",
+  "price": 60,
+  "unit": "Team",
+  "totalTickets": 24,
+  "bookedTickets": 0,
+  "earlyBirdPrice": 50,
+  "earlyBirdTickets": 10,
+  "image": "titel.png",
+  "time": "15:00",
+  "teamSize": 2,
+  "ticketLabel": "Teamticket",
+  "locationName": "padelworld Bochum",
+  "address": "Am Leithenhaus 14",
+  "postalCode": "44892",
+  "city": "Bochum",
+  "plausibleEventName": "Mixed Padel Tournemant - Summer Edition",
+  "plausibleEventSlug": "mixed-padel-turnier-sommer-edition",
+  "plausibleEventPath": "/events/mixed-padel-turnier-sommer-edition",
+  "earlyBirdBooked": 0
+}

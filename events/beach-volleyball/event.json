@@ -1,0 +1,32 @@
+{
+  "name": "Beachvolleyball Tournament",
+  "date": "2026-06-27",
+  "categories": [
+    "Sport",
+    "Live DJ",
+    "Cocktails"
+  ],
+  "description": "Sonne, Strand, Cocktails und Live-Musik – was kann es Schöneres geben? Genau so verbringen wir am 27.06.2026 unser Beachvolleyball Tournament.\n\nMelde Dich alleine oder direkt im Team an und kämpfe um den Sieg in diesem prestigeträchtigen Turnier. Wie von uns gewohnt erwarten Dich eine unfassbare Außenanlage, ein Live-DJ und frische Cocktails – natürlich auch alkoholfrei.\n\nWir freuen uns riesig auf Euch!",
+  "price": 20,
+  "unit": "Person",
+  "totalTickets": 60,
+  "bookedTickets": 0,
+  "earlyBirdPrice": 0,
+  "earlyBirdTickets": 0,
+  "image": "titel.png",
+  "time": "15:00",
+  "locationName": "Kletterhalle Bergwerk",
+  "address": "Emscherallee 33",
+  "postalCode": "44369",
+  "city": "Dortmund",
+  "plausibleEventName": "Beachvolleyball Tournament",
+  "plausibleEventSlug": "beach-volleyball",
+  "plausibleEventPath": "/events/beach-volleyball",
+  "earlyBirdBooked": 0,
+  "phoneRequirement": "order",
+  "teamQuestion": "Eigenes Team oder zugelost?",
+  "teamOptions": [
+    "Eigenes Team",
+    "Bitte zugelost werden"
+  ]
+}

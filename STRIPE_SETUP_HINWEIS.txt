@@ -1,0 +1,15 @@
+Stripe Checkout ist technisch vorbereitet über Cloudflare Pages Functions:
+functions/api/create-checkout-session.js
+
+Wichtig: Der eingebaute pk_live-Schlüssel ist öffentlich und darf im Frontend stehen. Für echte Checkout-Sessions braucht Cloudflare Pages zusätzlich eine geheime Environment Variable:
+STRIPE_SECRET_KEY = sk_live_...
+
+Danach erstellt die Function dynamische Checkout-Sessions mit:
+- Eventname, Datum, Uhrzeit, Location
+- Ticketmenge, Early-Bird- und Normalpreis-Aufteilung
+- Rechnungsname, Rechnungsadresse, Telefonnummer
+- Ticketinhaber
+- Customer Email
+- invoice_creation[enabled]=true für Stripe-Rechnung
+
+In Stripe sollten außerdem automatische Zahlungsbelege/Rechnungs-E-Mails aktiviert sein, damit Käufer nach Zahlung eine sinnvolle Bestätigung erhalten.

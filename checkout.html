@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ticket sichern | vereint. community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400;1,600&family=Source+Sans+3:wght@400;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<!-- Privacy-friendly analytics by Plausible -->
+<script async src="https://plausible.io/js/pa-Tc2-Dt9WTCzV7GfvJTcr_.js"></script>
+
+<div id="successModal" class="success-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="successTitle">
+  <div class="success-dialog">
+    <p class="eyebrow">Zahlung bestätigt</p>
+    <h2 class="success-title" id="successTitle">Danke Dir.</h2>
+    <p class="success-text" id="successText"></p>
+    <div class="success-actions">
+      <a class="btn secondary" href="index.html">Zur Startseite</a>
+      <a class="btn" id="buyAgainLink" href="index.html#events">Weitere Tickets kaufen</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init();
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--cream:#F5F0E8;--brown:#4A3728;--brown-soft:#5A4A3F;--sand:#C4A882;--gold:#A66B11;--charcoal:#2C2420;--white:#FDFAF5;--navy:#2F3E4E;--muted:#7A6355;--serif:'Playfair Display','Source Serif 4',Georgia,serif;--body:'Source Serif 4',Georgia,serif;--ui:'Source Sans 3',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+body{font-family:var(--body);background:linear-gradient(180deg,#F8F4EC 0%,var(--cream) 100%);color:var(--charcoal);line-height:1.6;min-height:100vh}
+a{color:inherit}.site-nav{height:82px;padding:0 2.4rem;background:rgba(253,250,245,.88);border-bottom:1px solid rgba(44,36,32,.08);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}.nav-logo{font-family:var(--serif);font-size:1.65rem;color:var(--charcoal);text-decoration:none;letter-spacing:-.045em}.nav-link{font-family:var(--ui);font-size:.92rem;text-decoration:none;color:var(--brown);font-weight:700}
+.checkout{width:min(1160px,calc(100% - 2rem));margin:clamp(1rem,3vw,2.4rem) auto 4rem;display:grid;grid-template-columns:minmax(0,.92fr) minmax(330px,.44fr);gap:1.2rem}.panel{background:rgba(253,250,245,.92);border:1px solid rgba(90,74,63,.1);border-radius:1.5rem;box-shadow:0 18px 60px rgba(47,62,78,.07);overflow:hidden}.event-hero{display:grid;grid-template-columns:minmax(240px,.46fr) minmax(0,.54fr)}.event-img{min-height:360px;background:#E8DAC6;position:relative;overflow:hidden}.event-img img{width:100%;height:100%;object-fit:cover;display:block}.event-date{position:absolute;top:1rem;left:1rem;background:rgba(253,250,245,.95);border-radius:.9rem;padding:.55rem .8rem;text-align:center;box-shadow:0 12px 24px rgba(44,36,32,.08)}.event-date strong{display:block;font-family:var(--serif);font-size:1.45rem;line-height:1;color:var(--brown)}.event-date span{font-family:var(--ui);font-size:.62rem;text-transform:uppercase;letter-spacing:.12em;color:var(--navy);font-weight:800}.event-info{padding:clamp(1.4rem,3vw,2.2rem)}.back{display:inline-flex;margin-bottom:1rem;font-family:var(--ui);font-weight:800;font-size:.84rem;text-decoration:none;color:var(--brown)}.eyebrow{font-family:var(--ui);font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--navy);margin-bottom:.7rem}.title{font-family:var(--serif);font-size:clamp(2.05rem,3.7vw,3.35rem);line-height:.98;letter-spacing:-.055em;color:var(--brown);font-weight:400;margin-bottom:1rem}.desc{color:var(--muted);font-size:1rem;line-height:1.72;margin-bottom:1.15rem;white-space:pre-line}.meta-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem}.meta{border:1px solid rgba(47,62,78,.1);background:#FFFDF8;border-radius:1rem;padding:.76rem}.meta span{display:block;font-family:var(--ui);font-size:.6rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--navy);margin-bottom:.12rem}.meta strong{font-family:var(--serif);font-size:1.02rem;color:var(--brown);font-weight:400}.flow-panel{padding:clamp(1.25rem,2.5vw,1.8rem)}.steps{display:flex;gap:.7rem;margin-bottom:1.35rem}.step-pill{flex:1;border:1px solid rgba(90,74,63,.14);border-radius:999px;background:#FFFDF8;color:var(--muted);font-family:var(--ui);font-weight:900;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;padding:.65rem .8rem;text-align:center}.step-pill.active{background:var(--brown);border-color:var(--brown);color:var(--cream)}.form-title{font-family:var(--serif);font-size:1.75rem;color:var(--brown);font-weight:400;letter-spacing:-.035em;margin-bottom:.3rem}.form-note{color:var(--muted);font-size:.94rem;margin-bottom:1.2rem}.field{margin-bottom:.9rem}.field label{display:block;font-family:var(--ui);font-weight:800;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--navy);margin-bottom:.35rem}.field input,.field textarea,.field select{width:100%;border:1.5px solid rgba(90,74,63,.16);border-radius:.95rem;background:#FFFDF8;color:var(--charcoal);font:inherit;padding:.85rem .95rem;outline:none}.field textarea{min-height:92px;resize:vertical}.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--brown)}.field input::placeholder,.field textarea::placeholder{color:rgba(47,62,78,.45)}.mini-note{font-size:.78rem;line-height:1.45;color:var(--muted);margin-top:.35rem}.actions{display:flex;gap:.7rem;margin-top:1.1rem}.btn{width:100%;border:0;border-radius:999px;background:var(--brown);color:var(--cream);font-family:var(--ui);font-size:.94rem;font-weight:800;padding:1rem 1.2rem;cursor:pointer;box-shadow:0 12px 30px rgba(74,55,40,.14)}.btn:hover{background:var(--charcoal)}.btn.secondary{background:transparent;color:var(--brown);border:1.5px solid rgba(90,74,63,.2);box-shadow:none}.summary{position:sticky;top:98px;padding:1.35rem}.summary-card{border:1px solid rgba(90,74,63,.1);background:#FFFDF8;border-radius:1.1rem;padding:1rem;margin-top:.75rem}.price-line{display:flex;justify-content:space-between;gap:1rem;padding:.58rem 0;border-bottom:1px solid rgba(90,74,63,.09);font-family:var(--ui);color:var(--navy);font-weight:800}.price-line span:last-child{text-align:right}.price-line.total{border:0;padding-top:1rem;color:var(--brown);font-family:var(--serif);font-size:1.55rem;font-weight:400;letter-spacing:-.035em}.price-detail{display:block;font-size:.72rem;line-height:1.35;color:var(--muted);font-weight:700;margin-top:.15rem}.availability{margin:.7rem 0 1rem;font-family:var(--ui);font-size:.82rem;font-weight:800;color:var(--navy);padding:.75rem .85rem;border-radius:1rem;background:rgba(47,62,78,.06)}.availability.low{color:#B04438;background:rgba(176,68,56,.08)}.availability .early-count{display:block;color:#9C6A18;margin-top:.18rem}.save-note{display:inline-flex;margin-top:.75rem;border-radius:999px;background:rgba(166,107,17,.10);color:#9C6A18;font-family:var(--ui);font-size:.72rem;font-weight:900;padding:.28rem .58rem}.error{padding:2rem;text-align:center}.is-hidden{display:none!important}@media(max-width:900px){.site-nav{padding:0 1.2rem}.checkout{grid-template-columns:1fr}.event-hero{grid-template-columns:1fr}.event-img{min-height:260px}.summary{position:static}.meta-strip{grid-template-columns:1fr}.actions{flex-direction:column}}
+
+/* Requested checkout layout: 4:5 / 4:5 top, 8:2.5 bottom */
+.event-overview{display:grid;grid-template-columns:1fr 1fr;grid-template-areas:"image head" "bottom bottom";gap:1rem;padding:1rem}
+.event-overview .event-img{grid-area:image;aspect-ratio:4/5;min-height:0;border-radius:1.25rem}
+.event-head{grid-area:head;background:#FFFDF8;border:1px solid rgba(90,74,63,.1);border-radius:1.25rem;padding:clamp(1.2rem,2.6vw,2rem);display:flex;flex-direction:column;justify-content:space-between;min-height:0;aspect-ratio:4/5}
+.event-bottom{grid-area:bottom;display:flex;flex-direction:column;gap:1rem}
+.event-description-box{background:#FFFDF8;border:1px solid rgba(90,74,63,.1);border-radius:1.25rem;padding:clamp(1.1rem,2vw,1.45rem)}
+.event-description-box .desc{margin:0;font-size:.96rem;line-height:1.65}
+.event-bottom .meta-strip{grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem}
+.location-link{color:inherit;text-decoration:none}.location-link:hover{text-decoration:underline}.meta.location strong{font-size:.94rem;line-height:1.25}.step-pill{cursor:pointer}.step-pill:disabled{cursor:default}.form-error{display:none;margin:.85rem 0 0;color:#B04438;background:rgba(176,68,56,.08);border-radius:.9rem;padding:.75rem .85rem;font-family:var(--ui);font-size:.84rem;font-weight:800}.form-error.is-visible{display:block}.payment-note{margin:.85rem 0 0;color:var(--navy);background:rgba(47,62,78,.06);border-radius:.9rem;padding:.75rem .85rem;font-family:var(--ui);font-size:.82rem;font-weight:800;line-height:1.45}
+@media(max-width:900px){.event-overview{grid-template-columns:1fr;grid-template-areas:"image" "head" "bottom"}.event-head{aspect-ratio:auto}.event-overview .event-img{aspect-ratio:4/5}.event-bottom .meta-strip{grid-template-columns:1fr}}
+
+.success-modal{position:fixed;inset:0;z-index:2000;background:rgba(31,27,24,.42);display:flex;align-items:center;justify-content:center;padding:1.2rem}.success-modal.is-hidden{display:none}.success-dialog{width:min(92vw,540px);background:#FFFDF8;border:1px solid rgba(90,74,63,.16);border-radius:1.4rem;box-shadow:0 24px 80px rgba(47,62,78,.22);padding:clamp(1.45rem,4vw,2.2rem);text-align:center}.success-dialog .eyebrow{margin-bottom:.55rem}.success-title{font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);line-height:1;color:var(--brown);font-weight:400;letter-spacing:-.045em;margin-bottom:.85rem}.success-text{color:var(--muted);line-height:1.65;margin-bottom:1.2rem}.success-actions{display:flex;gap:.7rem}.success-actions .btn{text-decoration:none}@media(max-width:560px){.success-actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav class="site-nav"><a class="nav-logo" href="index.html">vereint.</a><a class="nav-link" href="index.html#events">Zur&uuml;ck zu den Events</a></nav>
+<main class="checkout">
+  <section class="panel" id="checkoutMain"><div class="error">Event wird geladen...</div></section>
+  <aside class="panel summary" id="checkoutSummary"></aside>
+</main>
+<script>
+var embeddedEventData=[
+  {
+    "name": "Beachvolleyball Tournament",
+    "date": "2026-06-27",
+    "categories": [
+      "Sport",
+      "Live DJ",
+      "Cocktails"
+    ],
+    "description": "Sonne, Strand, Cocktails und Live-Musik – was kann es Schöneres geben? Genau so verbringen wir am 27.06.2026 unser Beachvolleyball Tournament.\n\nMelde Dich alleine oder direkt im Team an und kämpfe um den Sieg in diesem prestigeträchtigen Turnier. Wie von uns gewohnt erwarten Dich eine unfassbare Außenanlage, ein Live-DJ und frische Cocktails – natürlich auch alkoholfrei.\n\nWir freuen uns riesig auf Euch!",
+    "price": 20,
+    "unit": "Person",
+    "totalTickets": 60,
+    "bookedTickets": 0,
+    "earlyBirdPrice": 0,
+    "earlyBirdTickets": 0,
+    "image": "titel.png",
+    "time": "15:00",
+    "locationName": "Kletterhalle Bergwerk",
+    "address": "Emscherallee 33",
+    "postalCode": "44369",
+    "city": "Dortmund",
+    "plausibleEventName": "Beachvolleyball Tournament",
+    "plausibleEventSlug": "beach-volleyball",
+    "plausibleEventPath": "/events/beach-volleyball",
+    "earlyBirdBooked": 0,
+    "phoneRequirement": "order",
+    "teamQuestion": "Eigenes Team oder zugelost?",
+    "teamOptions": [
+      "Eigenes Team",
+      "Bitte zugelost werden"
+    ],
+    "slug": "beach-volleyball"
+  },
+  {
+    "name": "Mixed Padel Tournament - Reloaded",
+    "date": "2026-08-22",
+    "categories": [
+      "Sport",
+      "Padel"
+    ],
+    "description": "Unser Mixed Padel Tournament lädt erneut – genau wie wir. Denn wir laden Euch ein zur nächsten Ausgabe dieses mittlerweile prestigeträchtigen Events, das an mancher Stelle bereits in einem Satz mit Wimbledon fällt.\n\nDa Alexander Zverev leider verhindert ist, haben wir nur für Euch den zweitbesten Alex organisiert, der uns wie bei den letzten Malen als DJ begeistern wird.\n\nWie immer gibt es vor Ort kühle Getränke und kleine Snacks. Auch diesmal ist das Turnier für jedes Niveau geöffnet und geeignet.\n\nBitte seid etwa 30 Minuten vor Beginn vor Ort, damit wir möglichst pünktlich starten können.\n\nWir freuen uns sehr auf Eure Teilnahme. Bis dahin!",
+    "price": 60,
+    "unit": "Team",
+    "totalTickets": 24,
+    "bookedTickets": 0,
+    "earlyBirdPrice": 50,
+    "earlyBirdTickets": 5,
+    "image": "titel.png",
+    "time": "15:00",
+    "teamSize": 2,
+    "ticketLabel": "Teamticket",
+    "locationName": "padelworld Bochum",
+    "address": "Am Leithenhaus 14",
+    "postalCode": "44892",
+    "city": "Bochum",
+    "plausibleEventName": "Mixed Padel Tournament - Reloaded",
+    "plausibleEventSlug": "mixed-padel-tournament-reloaded",
+    "plausibleEventPath": "/events/mixed-padel-tournament-reloaded",
+    "earlyBirdBooked": 0,
+    "slug": "mixed-padel-tournament-reloaded"
+  },
+  {
+    "name": "Mixed Padel Tournemant - Summer Edition",
+    "date": "2026-06-13",
+    "categories": [
+      "Sport",
+      "Padel"
+    ],
+    "description": "Unser beliebtestes Format ist zurück – diesmal als Summer Edition.\n\nFreu Dich auf Padel, Sonne, Musik, kühle Getränke und eine entspannte Community-Atmosphäre. Gespielt wird als gemischtes Team: ein Mann und eine Frau treten gemeinsam an.\n\nDas Event ist für jedes Spielniveau gedacht. Je nach Teilnehmerfeld teilen wir vor Ort ggf. in Starter und Pro auf, damit jedes Team faire Spiele und den bestmöglichen Tag hat. Getränke können vor Ort erworben werden.\n\nBitte seid spätestens 30 Minuten vor Start da, damit wir entspannt ankommen und pünktlich starten können.",
+    "price": 60,
+    "unit": "Team",
+    "totalTickets": 24,
+    "bookedTickets": 0,
+    "earlyBirdPrice": 50,
+    "earlyBirdTickets": 10,
+    "image": "titel.png",
+    "time": "15:00",
+    "teamSize": 2,
+    "ticketLabel": "Teamticket",
+    "locationName": "padelworld Bochum",
+    "address": "Am Leithenhaus 14",
+    "postalCode": "44892",
+    "city": "Bochum",
+    "plausibleEventName": "Mixed Padel Tournemant - Summer Edition",
+    "plausibleEventSlug": "mixed-padel-turnier-sommer-edition",
+    "plausibleEventPath": "/events/mixed-padel-turnier-sommer-edition",
+    "earlyBirdBooked": 0,
+    "slug": "mixed-padel-turnier-sommer-edition"
+  }
+];
+var state={event:null,qty:1,step:1};
+var STRIPE_PUBLIC_KEY='pk_live_51TSehCFb5giaeO0x1yWeq6A8mMxhgccuaG7XEFPjUHIShWEQ1H21MWP8zmBhg0pSi58yTGPTDjT4VR2Ea2axxRnC00tBxJreVL';
+var stripe=(window.Stripe&&STRIPE_PUBLIC_KEY)?Stripe(STRIPE_PUBLIC_KEY):null;
+function cleanLabel(value){return String(value||'Event').replace(/\s+/g,' ').trim().slice(0,90)}
+function track(name,props,virtualPath){props=props||{};if(typeof window.plausible==='function'){window.plausible(name,{props:props});if(virtualPath){window.plausible('pageview',{u:location.origin+virtualPath});}}try{var body=JSON.stringify({n:name,u:location.origin+(virtualPath||location.pathname),d:location.hostname,r:document.referrer||null,p:props});if(navigator.sendBeacon){navigator.sendBeacon('https://plausible.io/api/event',new Blob([body],{type:'application/json'}));}}catch(err){}}
+function buildClientReference(payload){return [payload.eventSlug,payload.quantity,Date.now()].join('-').replace(/[^a-zA-Z0-9_-]/g,'').slice(0,80)}
+function qs(name){return new URLSearchParams(location.search).get(name)}
+function escapeHtml(v){return String(v==null?'':v).replace(/[&<>'"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]})}
+function parseEventDate(value){var p=String(value||'').split('-').map(Number);return new Date(p[0],(p[1]||1)-1,p[2]||1)}
+function dateLong(value){return parseEventDate(value).toLocaleDateString('de-DE',{weekday:'long',day:'2-digit',month:'long',year:'numeric'})}
+function dateTimeLong(ev){return dateLong(ev.date)+(ev.time?' · '+ev.time+' Uhr':'')}
+function monthShort(date){return date.toLocaleDateString('de-DE',{month:'short'}).replace('.','')}
+function euro(value){return Number(value||0).toLocaleString('de-DE',{maximumFractionDigits:0})+' €'}
+function normaliseEvent(data,slug){var booked=Math.max(0,Number(data.bookedTickets||0));var total=Math.max(0,Number(data.totalTickets||0));var ebTotal=Math.max(0,Number(data.earlyBirdTickets||0));var ebBooked=Math.max(0,Number(data.earlyBirdBooked==null?Math.min(booked,ebTotal):data.earlyBirdBooked));return {slug:slug,name:String(data.name||slug),date:String(data.date||''),time:String(data.time||''),categories:(Array.isArray(data.categories)?data.categories:[]).filter(Boolean).slice(0,3).map(String),description:String(data.description||''),price:Number(data.price||0),unit:String(data.unit||'Person'),teamSize:Math.max(1,Number(data.teamSize||1)),ticketLabel:String(data.ticketLabel||'Ticket'),totalTickets:total,bookedTickets:booked,staticBookedTickets:booked,availableTickets:Math.max(0,total-booked),earlyBirdPrice:Number(data.earlyBirdPrice||0),earlyBirdTickets:ebTotal,earlyBirdBooked:ebBooked,staticEarlyBirdBooked:ebBooked,earlyBirdAvailable:Math.max(0,ebTotal-ebBooked),image:data.image||'titel.png',locationName:String(data.locationName||''),address:String(data.address||''),postalCode:String(data.postalCode||''),city:String(data.city||''),stripePaymentLink:String(data.stripePaymentLink||''),stripePriceId:String(data.stripePriceId||''),plausibleEventName:String(data.plausibleEventName||data.name||slug),plausibleEventSlug:String(data.plausibleEventSlug||slug),plausibleEventPath:String(data.plausibleEventPath||('/events/'+slug)),phoneRequirement:String(data.phoneRequirement||'person'),teamQuestion:String(data.teamQuestion||''),teamOptions:(Array.isArray(data.teamOptions)?data.teamOptions:[]).filter(Boolean).map(String)}}
+
+function mergeInventory(ev,inv){if(!ev||!inv)return ev;var booked=Number(ev.staticBookedTickets||0)+Math.max(0,Number(inv.bookedTickets||0));var ebBooked=Number(ev.staticEarlyBirdBooked||0)+Math.max(0,Number(inv.earlyBirdBooked||0));ev.bookedTickets=booked;ev.earlyBirdBooked=ebBooked;ev.availableTickets=Math.max(0,Number(ev.totalTickets||0)-booked);ev.earlyBirdAvailable=Math.max(0,Number(ev.earlyBirdTickets||0)-ebBooked);return ev}
+function fetchInventory(slug){if(!window.fetch)return Promise.resolve(null);return fetch('/api/ticket-inventory?event='+encodeURIComponent(slug),{cache:'no-store',headers:{'Accept':'application/json'}}).then(function(r){if(!r.ok)return null;return r.json()}).catch(function(){return null})}
+function mapUrl(ev){var parts=[ev.locationName,ev.address,ev.postalCode,ev.city].filter(Boolean).join(', ');return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(parts||ev.name)}
+function locationHtml(ev){var lines=[ev.locationName,ev.address,[ev.postalCode,ev.city].filter(Boolean).join(' ')].filter(Boolean);return lines.length?'<a class="location-link" href="'+escapeHtml(mapUrl(ev))+'" target="_blank" rel="noopener noreferrer">'+lines.map(escapeHtml).join('<br>')+'</a>':'Noch offen'}
+function isEarly(ev){return ev.earlyBirdTickets>0&&ev.earlyBirdAvailable>0&&ev.availableTickets>0&&ev.earlyBirdPrice>0}
+function pricePlan(ev,qty){var early=isEarly(ev)?Math.min(qty,ev.earlyBirdAvailable):0;var normal=Math.max(0,qty-early);var total=early*ev.earlyBirdPrice+normal*ev.price;return {early:early,normal:normal,total:total,saving:early*Math.max(0,ev.price-ev.earlyBirdPrice)}}
+function unitLabel(ev,n){var unit=String(ev.unit||'Ticket');if(Number(n)===1)return escapeHtml(unit);var irregular={Person:'Personen',person:'personen',Team:'Teams',team:'teams',Ticket:'Tickets',ticket:'tickets'};if(irregular[unit])return escapeHtml(irregular[unit]);if(/(s|x|z|ch|sh)$/i.test(unit))return escapeHtml(unit+'es');return escapeHtml(unit+'s')}
+function render(){var ev=state.event;var main=document.getElementById('checkoutMain');if(!ev){main.innerHTML='<div class="error">Dieses Event wurde nicht gefunden.<br><br><a class="back" href="index.html#events">Zur&uuml;ck zu den Events</a></div>';document.getElementById('checkoutSummary').innerHTML='';return}var d=parseEventDate(ev.date);var max=Math.max(1,ev.availableTickets);state.qty=Math.min(state.qty,max);main.innerHTML='<div class="event-overview"><div class="event-img"><img src="events/'+encodeURIComponent(ev.slug)+'/'+escapeHtml(ev.image)+'" alt="Titelbild '+escapeHtml(ev.name)+'"><div class="event-date"><strong>'+String(d.getDate()).padStart(2,'0')+'</strong><span>'+escapeHtml(monthShort(d))+'</span></div></div><div class="event-head"><div><a class="back" href="index.html#events">← Zur&uuml;ck</a><p class="eyebrow">'+escapeHtml(ev.categories.join(' · '))+'</p><h1 class="title">'+escapeHtml(ev.name)+'</h1></div></div><div class="event-bottom"><div class="event-description-box"><p class="desc">'+escapeHtml(ev.description)+'</p></div><div class="meta-strip"><div class="meta"><span>Datum / Uhrzeit</span><strong>'+escapeHtml(dateTimeLong(ev))+'</strong></div><div class="meta location"><span>Location</span><strong>'+locationHtml(ev)+'</strong></div><div class="meta"><span>Preis</span><strong>'+euro(isEarly(ev)?ev.earlyBirdPrice:ev.price)+'</strong>'+(isEarly(ev)?'<span class="price-detail">Normalpreis '+euro(ev.price)+' · Du sparst '+euro(ev.price-ev.earlyBirdPrice)+'</span>':'')+'</div><div class="meta"><span>Ticket</span><strong>'+ev.availableTickets+' verf&uuml;gbar</strong>'+(isEarly(ev)?'<span class="price-detail">davon '+ev.earlyBirdAvailable+' Early Bird</span>':'')+'</div></div></div></div><div class="flow-panel"><div class="steps"><button type="button" class="step-pill '+(state.step===1?'active':'')+'" data-step="1">1 Auswahl</button><button type="button" class="step-pill '+(state.step===2?'active':'')+'" data-step="2">2 Ticketdaten</button></div><div id="stepContent"></div></div>';main.querySelectorAll('[data-step]').forEach(function(btn){btn.addEventListener('click',function(){state.step=Number(btn.getAttribute('data-step')||1);render()})});renderStep();updateSummary()}
+function renderStep(){
+  var ev=state.event;
+  var max=Math.max(1,ev.availableTickets);
+  var el=document.getElementById('stepContent');
+  if(state.step===1){
+    el.innerHTML='<h2 class="form-title">Ticketauswahl</h2><p class="form-note">Wähle zuerst die Anzahl. Falls mehr Tickets ausgewählt werden als Early Bird verfügbar sind, teilen wir die Rechnung automatisch fair auf.</p><div class="field"><label for="qty">Anzahl Tickets</label><select id="qty" name="quantity">'+Array.from({length:max},function(_,i){var n=i+1;return '<option value="'+n+'" '+(n===state.qty?'selected':'')+'>'+n+' '+unitLabel(ev,n)+'</option>'}).join('')+'</select></div><div class="actions"><button class="btn" type="button" id="toData">Weiter zu den Ticketdaten</button></div>';
+    document.getElementById('qty').addEventListener('change',function(e){state.qty=Number(e.target.value||1);track('Checkout Quantity Change: '+cleanLabel(ev.plausibleEventName||ev.name),{event_name:cleanLabel(ev.plausibleEventName||ev.name),event_slug:ev.slug,quantity:String(state.qty),funnel_step:'checkout_quantity_change'},'/funnel/checkout-quantity/'+ev.slug);updateSummary()});
+    document.getElementById('toData').addEventListener('click',function(){state.step=2;render()});
+    return;
+  }
+  var requiredPhones=String(ev.phoneRequirement||'person')==='order'?1:Math.max(1,Number(ev.teamSize||1))*Math.max(1,Number(state.qty||1));
+  var isTeamEvent=Number(ev.teamSize||1)>1;
+  var needsTeamPreference=!!ev.teamQuestion;
+  var teamPreferenceField=needsTeamPreference?'<div class="field"><label for="teamPreference">'+escapeHtml(ev.teamQuestion)+'</label><select id="teamPreference" name="team_preference" required><option value="">Bitte auswählen</option>'+(ev.teamOptions.length?ev.teamOptions:['Eigenes Team','Bitte zugelost werden']).map(function(opt){return '<option value="'+escapeHtml(opt)+'">'+escapeHtml(opt)+'</option>'}).join('')+'</select></div>':'';
+  var nameHint=isTeamEvent?'Bitte trage pro Team beide Namen ein – also jeweils Mann und Frau gemeinsam in einer Zeile. Wenn Du mehrere Teams buchst, bitte alle Teams mit jeweils beiden Namen aufführen.':'Bitte trage die Namen aller Ticketinhaber ein.';
+  var phoneLabel=requiredPhones>1?'Telefonnummern':'Telefonnummer';
+  var phoneHint=requiredPhones>1?'Bitte trage '+requiredPhones+' Telefonnummern ein – eine pro Person, jeweils in eine eigene Zeile.':'Für weitere Kommunikation';
+  var phoneField=requiredPhones>1?'<textarea id="phone" name="phone" required autocomplete="tel" placeholder="'+escapeHtml(phoneHint)+'"></textarea><p class="mini-note">'+escapeHtml(phoneHint)+'</p>':'<input id="phone" name="phone" type="tel" required autocomplete="tel" placeholder="Für weitere Kommunikation">';
+  el.innerHTML='<form id="ticketForm" novalidate><h2 class="form-title">Ticketdaten</h2><p class="form-note">Im nächsten Schritt wirst Du zu unserem Zahlungsanbieter weitergeleitet.</p><div class="field"><label for="holders">Name(n) Ticketinhaber</label><textarea id="holders" name="ticket_holders" required placeholder="'+escapeHtml(nameHint)+'"></textarea><p class="mini-note">'+escapeHtml(nameHint)+'</p></div><div class="field"><label for="billingName">Rechnungsname</label><input id="billingName" name="billing_name" required autocomplete="name" placeholder="Vorname Nachname"></div><div class="field"><label for="billingAddress">Rechnungsdaten</label><textarea id="billingAddress" name="billing_address" required placeholder="Straße, Hausnummer, PLZ, Ort, Land"></textarea></div><div class="field"><label for="email">Mailadresse</label><input id="email" name="email" type="email" required autocomplete="email" placeholder="name@mail.de"></div><div class="field"><label for="phone">'+phoneLabel+'</label>'+phoneField+'</div>'+teamPreferenceField+'<div class="form-error" id="formError">Bitte fülle alle Pflichtfelder vollständig und korrekt aus.</div><div class="payment-note" id="paymentNote">Sichere Zahlung via Stripe. Rechnungs- und Ticketdaten werden für die Zahlungszuordnung vorbereitet.</div><div class="actions"><button class="btn secondary" type="button" id="backToSelection">Zurück</button><button class="btn" type="submit">Zur Bezahlung</button></div></form>';
+  document.getElementById('backToSelection').addEventListener('click',function(){state.step=1;render()});
+  document.getElementById('ticketForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var formEl=e.currentTarget;
+    var err=document.getElementById('formError');
+    if(!formEl.checkValidity()){if(err)err.classList.add('is-visible');formEl.reportValidity();return}
+    if(err)err.classList.remove('is-visible');
+    var form=new FormData(formEl);
+    var required=['ticket_holders','billing_name','billing_address','email','phone'];if(needsTeamPreference)required.push('team_preference');
+    var missing=required.some(function(k){return !String(form.get(k)||'').trim()});
+    var phoneEntries=String(form.get('phone')||'').split(/\n+/).map(function(v){return v.trim()}).filter(Boolean);
+    if(missing||phoneEntries.length<requiredPhones){
+      if(err){
+        err.textContent=phoneEntries.length<requiredPhones?'Bitte trage '+requiredPhones+' Telefonnummern ein – jeweils eine pro Zeile.':'Bitte fülle alle Pflichtfelder vollständig und korrekt aus.';
+        err.classList.add('is-visible');
+      }
+      return;
+    }
+    var plan=pricePlan(ev,state.qty);
+    var payload={eventSlug:ev.slug,eventName:ev.name,eventDate:ev.date,eventTime:ev.time,locationName:ev.locationName,address:ev.address,postalCode:ev.postalCode,city:ev.city,quantity:state.qty,unit:ev.unit,earlyBirdQuantity:plan.early,normalQuantity:plan.normal,earlyBirdUnitPrice:ev.earlyBirdPrice,normalUnitPrice:ev.price,total:plan.total,currency:'eur',ticketHolders:form.get('ticket_holders'),billingName:form.get('billing_name'),billingAddress:form.get('billing_address'),email:form.get('email'),phone:phoneEntries.join('\n'),phoneCount:phoneEntries.length,requiredPhoneCount:requiredPhones,teamPreference:form.get('team_preference')||'',totalTickets:ev.totalTickets,bookedTickets:ev.staticBookedTickets||0,earlyBirdTickets:ev.earlyBirdTickets,earlyBirdBooked:ev.staticEarlyBirdBooked||0,clientReference:buildClientReference({eventSlug:ev.slug,quantity:state.qty})};
+    try{sessionStorage.setItem('vereint_pending_checkout',JSON.stringify(payload));}catch(storageErr){}
+    var trackName=cleanLabel(ev.plausibleEventName||ev.name);
+    track('Checkout Data Submitted: '+trackName,{event_name:trackName,event_slug:ev.slug,quantity:String(state.qty),total:String(plan.total),funnel_step:'checkout_data_submitted'},'/funnel/checkout-data-submitted/'+ev.slug);
+    track('Stripe Checkout Opened: '+trackName,{event_name:trackName,event_slug:ev.slug,quantity:String(state.qty),total:String(plan.total),funnel_step:'stripe_checkout_opened'},'/funnel/stripe-opened/'+ev.slug);
+    var submitBtn=formEl.querySelector('button[type="submit"]');
+    if(submitBtn)submitBtn.disabled=true;
+    startStripeCheckout(ev,payload).catch(function(error){
+      track('Stripe Checkout Error: '+cleanLabel(ev.plausibleEventName||ev.name),{event_name:cleanLabel(ev.plausibleEventName||ev.name),event_slug:ev.slug,message:String(error&&error.message||error),funnel_step:'stripe_checkout_error'},'/funnel/stripe-error/'+ev.slug);
+      if(err){err.textContent=String(error&&error.message||'Stripe Checkout konnte nicht gestartet werden.');err.classList.add('is-visible');}
+      if(submitBtn)submitBtn.disabled=false;
+    });
+  })
+}
+
+function startStripeCheckout(ev,payload){
+  return fetch('/api/create-checkout-session',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload)})
+    .then(function(res){return res.json().catch(function(){return {}}).then(function(data){if(!res.ok)throw new Error(data.error||'Stripe Checkout konnte nicht erstellt werden.');return data;});})
+    .then(function(data){if(!data.url)throw new Error('Stripe Checkout URL fehlt.');window.location.href=data.url;})
+    .catch(function(apiError){
+      if(ev.stripePaymentLink){
+        var link=new URL(ev.stripePaymentLink,window.location.href);
+        link.searchParams.set('prefilled_email',payload.email);
+        link.searchParams.set('client_reference_id',payload.clientReference);
+        link.searchParams.set('utm_source','vereint_website');
+        link.searchParams.set('utm_medium','checkout');
+        link.searchParams.set('utm_campaign',ev.slug);
+        window.location.href=link.toString();
+        return;
+      }
+      if(stripe&&ev.stripePriceId){
+        return stripe.redirectToCheckout({
+          lineItems:[{price:ev.stripePriceId,quantity:payload.quantity}],
+          mode:'payment',
+          customerEmail:payload.email,
+          clientReferenceId:payload.clientReference,
+          successUrl:window.location.origin+window.location.pathname.replace(/checkout\.html$/,'')+'checkout.html?event='+encodeURIComponent(ev.slug)+'&status=success',
+          cancelUrl:window.location.href
+        }).then(function(result){if(result&&result.error)throw result.error;});
+      }
+      throw apiError;
+    });
+}
+
+function updateSummary(){var ev=state.event;if(!ev)return;var plan=pricePlan(ev,state.qty);var low=ev.availableTickets>0&&ev.availableTickets<5;var earlyLine=plan.early>0?'<div class="price-line"><span>Early Bird</span><span>'+plan.early+' × '+euro(ev.earlyBirdPrice)+'<span class="price-detail">statt '+euro(ev.price)+' / '+escapeHtml(ev.unit)+'</span></span></div>':'';var normalLine=plan.normal>0?'<div class="price-line"><span>Normalpreis</span><span>'+plan.normal+' × '+euro(ev.price)+'<span class="price-detail">/ '+escapeHtml(ev.unit)+'</span></span></div>':'';document.getElementById('checkoutSummary').innerHTML='<p class="eyebrow">Checkout</p><h2 class="form-title">Zusammenfassung</h2><div class="availability '+(low?'low':'')+'">'+(ev.availableTickets>0?(low?'davon nur noch ':'noch ')+ev.availableTickets+' Tickets verfügbar':'ausverkauft')+(isEarly(ev)?'<span class="early-count">davon '+ev.earlyBirdAvailable+' Early Bird · '+euro(ev.earlyBirdPrice)+' statt '+euro(ev.price)+'</span>':'')+'</div><div class="summary-card"><div class="price-line"><span>Auswahl</span><span>'+state.qty+' '+unitLabel(ev,state.qty)+'</span></div>'+earlyLine+normalLine+(plan.saving>0?'<div class="save-note">Du sparst '+euro(plan.saving)+' gegenüber Normalpreis</div>':'')+'<div class="price-line total"><span>Summe</span><span>'+euro(plan.total)+'</span></div></div>'}
+function showSuccessModal(name,slug){var modal=document.getElementById('successModal');var text=document.getElementById('successText');var again=document.getElementById('buyAgainLink');var eventName=state.event?state.event.name:(name||'dem Event');if(text){text.innerHTML='Deine Zahlung war erfolgreich. Wir freuen uns riesig und sehen uns beim <strong>'+escapeHtml(eventName)+'</strong>. Alles Weitere bekommst Du per Mail und WhatsApp.';}if(again){again.href='checkout.html?event='+encodeURIComponent(slug||state.event&&state.event.slug||'');}if(modal){modal.classList.remove('is-hidden');document.body.style.overflow='hidden';}}
+function handleReturnStatus(){var status=qs('status');if(!status)return;var slug=qs('event')||'';var name=state.event?cleanLabel(state.event.plausibleEventName||state.event.name):slug;if(status==='success'){var sessionId=qs('session_id')||'';fetch('/api/verify-checkout-session?session_id='+encodeURIComponent(sessionId),{cache:'no-store',headers:{'Accept':'application/json'}}).then(function(r){return r.json().catch(function(){return {}})}).then(function(data){if(!data||!data.paid)return;track('Ticket Purchased: '+name,{event_name:name,event_slug:slug,funnel_step:'ticket_purchased_return',session_id:sessionId},'/funnel/ticket-purchased/'+slug);try{sessionStorage.removeItem('vereint_pending_checkout')}catch(err){}mergeInventory(state.event,{bookedTickets:data.bookedTickets,earlyBirdBooked:data.earlyBirdBooked});render();showSuccessModal(name,slug);}).catch(function(){})}if(status==='cancelled'){track('Stripe Checkout Cancelled: '+name,{event_name:name,event_slug:slug,funnel_step:'stripe_cancelled'},'/funnel/stripe-cancelled/'+slug);}}
+function trackCheckoutView(){if(!state.event)return;var name=cleanLabel(state.event.plausibleEventName||state.event.name);track('Checkout Viewed: '+name,{event_name:name,event_slug:state.event.slug,funnel_step:'checkout_viewed'},'/funnel/checkout-viewed/'+state.event.slug)}function loadEvent(){var slug=qs('event');if(!slug){render();return}function finish(ev){state.event=ev;trackCheckoutView();render();handleReturnStatus()}function fromFallback(){var found=embeddedEventData.find(function(e){return e.slug===slug});var ev=found?normaliseEvent(found,found.slug):null;fetchInventory(slug).then(function(inv){finish(mergeInventory(ev,inv))})}if(!window.fetch){fromFallback();return}fetch('events/'+encodeURIComponent(slug)+'/event.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('not found');return r.json()}).then(function(data){var ev=normaliseEvent(data,slug);return fetchInventory(slug).then(function(inv){finish(mergeInventory(ev,inv))})}).catch(fromFallback)}
+loadEvent();
+</script>
+</body>
+</html>
